@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -26,41 +27,29 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-
     return new Scaffold(
       appBar: new AppBar(
-
         title: new Text(widget.title),
       ),
-      body: new Center(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Text(
-              'You have pushed the button this many times:',
-            ),
-            new Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
+      body: new FutureBuilder(
+          future: http.get('https://reqres.in/api/users?per_page=12'),
+          builder: (context, snapshot){
+            if(snapshot.connectionState == ConnectionState.done){
+
+              Map<String, dynamic> dataResponse = json.decode(snapshot.data.body);
+
+              return Container(
+                child: Text(snapshot.data.body.toString()),
+              );
+            }else{
+              return Container(
+                child: Center(child: CircularProgressIndicator()),
+              );
+            }
+          }
       ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: new Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
