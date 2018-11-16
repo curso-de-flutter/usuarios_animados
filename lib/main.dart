@@ -41,7 +41,24 @@ class _MyHomePageState extends State<MyHomePage> {
               Map<String, dynamic> dataResponse = json.decode(snapshot.data.body);
 
               return Container(
-                child: Text(snapshot.data.body.toString()),
+                padding: EdgeInsets.all(16.0),
+                child: ListView(
+                  children: dataResponse['data'].map<Widget>(
+              (item){
+                return Container(
+                  child: Card(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Image.network(item['avatar']),
+                        Text('${item['first_name']} ${item['last_name']}'),
+                      ],
+                    ),
+                  ),
+                );
+              }
+                  ).toList(),
+                ),
               );
             }else{
               return Container(
