@@ -46,13 +46,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: dataResponse['data'].map<Widget>(
               (item){
                 return Container(
-                  child: Card(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Image.network(item['avatar']),
-                        Text('${item['first_name']} ${item['last_name']}'),
-                      ],
+                  child: GestureDetector(
+                    onTap: () {
+
+                    },
+                    child: Card(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Image.network(item['avatar']),
+                          Text('${item['first_name']} ${item['last_name']}'),
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -66,6 +71,21 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             }
           }
+      ),
+    );
+  }
+}
+
+class ImageViewer extends StatelessWidget{
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: new AppBar(),
+      body: Container(
+        child: Center(
+          child: Text('Nueva Pantalla'),
+        ),
       ),
     );
   }
