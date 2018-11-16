@@ -13,6 +13,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: new MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: <String, WidgetBuilder>{
+        'imagen': (BuildContext context)=> new ImageViewer()
+      },
     );
   }
 }
@@ -48,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 return Container(
                   child: GestureDetector(
                     onTap: () {
-
+                      Navigator.of(context).pushNamed('imagen');
                     },
                     child: Card(
                       child: Row(
