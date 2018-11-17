@@ -12,10 +12,7 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(title: 'Flutter Demo Home Page'),
-      routes: <String, WidgetBuilder>{
-        'imagen': (BuildContext context)=> new ImageViewer()
-      },
+      home: new MyHomePage(title: 'Flutter Demo Home Page')
     );
   }
 }
@@ -38,49 +35,50 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: new FutureBuilder(
           future: http.get('https://reqres.in/api/users?per_page=12'),
-          builder: (context, snapshot){
-            if(snapshot.connectionState == ConnectionState.done){
-
-              Map<String, dynamic> dataResponse = json.decode(snapshot.data.body);
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              Map<String, dynamic> dataResponse =
+                  json.decode(snapshot.data.body);
 
               return Container(
                 padding: EdgeInsets.all(16.0),
                 child: ListView(
-                  children: dataResponse['data'].map<Widget>(
-              (item){
-                return Container(
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('imagen');
-                    },
-                    child: Card(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Image.network(item['avatar']),
-                          Text('${item['first_name']} ${item['last_name']}'),
-                        ],
+                  children: dataResponse['data'].map<Widget>((item) {
+                    return Container(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                            MaterialPageRoute(builder: (BuildContext context) =>
+                              ImageViewer()
+                            )
+                          );
+                        },
+                        child: Card(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Image.network(item['avatar']),
+                              Text(
+                                  '${item['first_name']} ${item['last_name']}'),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              }
-                  ).toList(),
+                    );
+                  }).toList(),
                 ),
               );
-            }else{
+            } else {
               return Container(
                 child: Center(child: CircularProgressIndicator()),
               );
             }
-          }
-      ),
+          }),
     );
   }
 }
 
-class ImageViewer extends StatelessWidget{
-
+class ImageViewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
