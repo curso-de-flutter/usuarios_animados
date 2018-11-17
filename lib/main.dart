@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         onTap: () {
                           Navigator.push(context,
                             MaterialPageRoute(builder: (BuildContext context) =>
-                              ImageViewer(url: item['avatar'],)
+                              ImageViewer(url: item['avatar'], id: item['id'].toString(),)
                             )
                           );
                         },
@@ -57,7 +57,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
-                              Image.network(item['avatar']),
+                              Hero(
+                                tag: item['id'].toString(),
+                                  child: Image.network(item['avatar'])
+                              ),
                               Text(
                                   '${item['first_name']} ${item['last_name']}'),
                             ],
@@ -79,15 +82,19 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class ImageViewer extends StatelessWidget {
-  ImageViewer({@required this.url});
+  ImageViewer({@required this.url, @required this.id});
   final url;
+  final id;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(),
       body: Container(
         child: Center(
-          child: Image.network(url),
+          child: Hero(
+            tag: id,
+              child: Image.network(url)
+          ),
         ),
       ),
     );
