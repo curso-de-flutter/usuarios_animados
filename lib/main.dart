@@ -45,11 +45,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ListView(
                   children: dataResponse['data'].map<Widget>((item) {
                     return Container(
-                      child: GestureDetector(
+                      child: GestureDetector(// HERO
                         onTap: () {
                           Navigator.push(context,
                             MaterialPageRoute(builder: (BuildContext context) =>
-                              ImageViewer()
+                              ImageViewer(url: item['avatar'],)
                             )
                           );
                         },
@@ -79,13 +79,15 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class ImageViewer extends StatelessWidget {
+  ImageViewer({@required this.url});
+  final url;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(),
       body: Container(
         child: Center(
-          child: Text('Nueva Pantalla'),
+          child: Image.network(url),
         ),
       ),
     );
