@@ -40,6 +40,24 @@ class _MyHomePageState extends State<MyHomePage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.title),
+        actions: <Widget>[
+          IconButton(
+            onPressed: null,
+            icon: Icon(
+              Icons.face,
+              color: Colors.white,
+            ),
+            tooltip: 'Dark/Light',
+          ),
+          IconButton(
+            onPressed: null,
+            icon: Icon(
+              Icons.color_lens,
+              color: Colors.white,
+            ),
+            tooltip: 'Color',
+          ),
+        ],
       ),
       body: new FutureBuilder(
           future: http.get('https://reqres.in/api/users?per_page=12'),
