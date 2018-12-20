@@ -35,6 +35,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  void changeBrightness() {
+    DynamicTheme.of(context).setBrightness(Theme.of(context).brightness == Brightness.dark? Brightness.light: Brightness.dark);
+  }
+
+  void changeColor() {
+    DynamicTheme.of(context).setThemeData(new ThemeData(
+        primaryColor: Theme.of(context).primaryColor == Colors.indigo? Colors.red: Colors.indigo
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -42,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: new Text(widget.title),
         actions: <Widget>[
           IconButton(
-            onPressed: null,
+            onPressed: () {changeBrightness();},
             icon: Icon(
               Icons.face,
               color: Colors.white,
@@ -50,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
             tooltip: 'Dark/Light',
           ),
           IconButton(
-            onPressed: null,
+            onPressed: () {changeColor();},
             icon: Icon(
               Icons.color_lens,
               color: Colors.white,
